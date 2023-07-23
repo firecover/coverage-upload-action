@@ -1,11 +1,10 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: Firecover coverage uploader
+description: Github action to upload coverage to Firecover
+author: Vajahath Ahmed
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  token:
+    required: false
+    description: 'Repository upload token - get it from Firecover'
 runs:
   using: 'node16'
   main: 'dist/index.js'
