@@ -6,7 +6,7 @@ import { readFile } from "node:fs/promises";
 
 @injectable()
 @singleton()
-export class Uploader {
+export class FileUploader {
   private signedRequestEndpoint: string;
 
   constructor(
@@ -48,14 +48,14 @@ export class Uploader {
     component: string;
     reporter: "json-summary";
   }): Promise<string> {
-    const [branch, token] = await Promise.all([
-      this.context.getBranch(),
+    const [ref, token] = await Promise.all([
+      this.context.getRef(),
       this.context.getToken(),
     ]);
 
     const body = JSON.stringify({
       token,
-      branch,
+      ref,
       reporter,
       component,
     });
