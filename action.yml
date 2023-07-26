@@ -6,5 +6,5 @@ inputs:
     required: false
     description: 'Repository upload token - get it from Firecover'
 runs:
-  using: 'node18'
+  using: 'node16'
   main: 'dist/index.js'
