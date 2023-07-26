@@ -8,6 +8,7 @@ export interface FullCoverage {
   statements: CoverageObject;
   functions: CoverageObject;
   branches: CoverageObject;
+  branchesTrue: CoverageObject;
 }
 
 export interface CoverageObject {

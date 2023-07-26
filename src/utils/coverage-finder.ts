@@ -58,6 +58,7 @@ export class CoverageFinder {
       functions: { covered: 0, pct: 0, skipped: 0, total: 0 },
       lines: { covered: 0, pct: 0, skipped: 0, total: 0 },
       statements: { covered: 0, pct: 0, skipped: 0, total: 0 },
+      branchesTrue: { covered: 0, pct: 0, skipped: 0, total: 0 },
     };
 
     for (const componentCoverage of componentTotalCoverages) {
@@ -125,6 +126,7 @@ export class CoverageFinder {
         functions: { covered: 0, pct: 0, skipped: 0, total: 0 },
         lines: { covered: 0, pct: 0, skipped: 0, total: 0 },
         statements: { covered: 0, pct: 0, skipped: 0, total: 0 },
+        branchesTrue: { covered: 0, pct: 0, skipped: 0, total: 0 },
       },
     };
 
@@ -135,9 +137,9 @@ export class CoverageFinder {
         for (const type of Object.keys(
           summary[file],
         ) as unknown as (keyof FullCoverage)[]) {
-          this.logger.log(
-            JSON.stringify({ file, type, summary, summaryAggregation }),
-          );
+          // this.logger.log(
+          //   JSON.stringify({ file, type, summary, summaryAggregation }),
+          // );
           summaryAggregation[file][type].covered += summary[file][type].covered;
           summaryAggregation[file][type].skipped += summary[file][type].skipped;
           summaryAggregation[file][type].total += summary[file][type].total;
