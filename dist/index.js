@@ -91,19 +91,19 @@ let Config = exports.Config = class Config {
         this.logger = logger;
     }
     getSignedRequestEndpoint() {
-        this.logger.debug(`[config/getSignedRequestEndpoint] => todo`);
+        this.logger.log(`[config/getSignedRequestEndpoint] => todo`);
         return "todo";
     }
     async getRepoFirecoverYmlSettings() {
         try {
             const configFileLocation = (0, node_path_1.join)((0, node_process_1.cwd)(), "./firecover.yml");
-            this.logger.debug(`[config/getRepoFirecoverYmlSettings] looking for ${configFileLocation}`);
+            this.logger.log(`[config/getRepoFirecoverYmlSettings] looking for ${configFileLocation}`);
             const firecoverYml = await (0, promises_1.readFile)(configFileLocation);
-            this.logger.debug(`[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`);
+            this.logger.log(`[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`);
             const firecoverConfig = yaml_1.default.parse(firecoverYml.toString()) || {};
-            this.logger.debug(`[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`);
+            this.logger.log(`[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`);
             const mergedConfig = { ...exports.defaultConfig, ...firecoverConfig };
-            this.logger.debug(`[config/getRepoFirecoverYmlSettings] mergedConfig ${JSON.stringify(mergedConfig)}`);
+            this.logger.log(`[config/getRepoFirecoverYmlSettings] mergedConfig ${JSON.stringify(mergedConfig)}`);
             return mergedConfig;
         }
         catch {
@@ -113,7 +113,7 @@ let Config = exports.Config = class Config {
     async getComponentList() {
         const settings = await this.getRepoFirecoverYmlSettings();
         const components = settings.components;
-        this.logger.debug(`[config/getComponentList] components identified: ${JSON.stringify(components)}`);
+        this.logger.log(`[config/getComponentList] components identified: ${JSON.stringify(components)}`);
         return components;
     }
 };
@@ -306,7 +306,7 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
             return globSpecificFiles;
         }));
         const files = filesRaw.flat();
-        this.logger.debug(`Found files: \n * ${files.join("\n * ")}`);
+        this.logger.log(`Found files: \n * ${files.join("\n * ")}`);
         const allSummaries = await Promise.all(files.map(async (file) => {
             const content = (await (0, promises_1.readFile)(file)).toString();
             const jsonData = JSON.parse(content);
@@ -403,7 +403,7 @@ let FileUploader = exports.FileUploader = class FileUploader {
         if (signedResponse.status !== 200) {
             const error = new Error("Unable to get token");
             this.logger.error(error);
-            this.logger.debug(JSON.stringify(signedResponse));
+            this.logger.log(JSON.stringify(signedResponse));
             throw error;
         }
         const tokenData = (await signedResponse.json());
