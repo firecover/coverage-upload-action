@@ -3,7 +3,8 @@ import { Context } from "./context";
 import { Config } from "./config";
 import { Logger } from "./logger";
 import { readFile } from "node:fs/promises";
-
+import fetch from "node-fetch";
+ 
 @injectable()
 @singleton()
 export class FileUploader {
