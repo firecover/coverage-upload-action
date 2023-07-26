@@ -34,11 +34,11 @@ export class CoverageFinder {
   constructor(
     private readonly config: Config,
     private readonly logger: Logger,
-    private readonly context: Context
+    private readonly context: Context,
   ) {}
 
   async findCoverageOfAllComponentsAndWriteToFile(
-    components: FirecoverYML["components"]
+    components: FirecoverYML["components"],
   ): Promise<string> {
     const coverageDir = await this.context.getTmpDirectory();
     const componentTotalCoverages = await Promise.all(
@@ -47,10 +47,10 @@ export class CoverageFinder {
         await this.writeOut(
           coverageDir,
           component.componentId,
-          componentCoverage
+          componentCoverage,
         );
         return componentCoverage.total;
-      })
+      }),
     );
 
     const projectFullCoverage: FullCoverage = {
@@ -62,7 +62,7 @@ export class CoverageFinder {
 
     for (const componentCoverage of componentTotalCoverages) {
       for (const type of Object.keys(
-        componentCoverage
+        componentCoverage,
       ) as unknown as (keyof FullCoverage)[]) {
         projectFullCoverage[type].covered += componentCoverage[type].covered;
         projectFullCoverage[type].skipped += componentCoverage[type].skipped;
@@ -84,19 +84,19 @@ export class CoverageFinder {
   private async writeOut(
     coverageDir: string,
     componentId: string,
-    componentCoverage: JSONSummary
+    componentCoverage: JSONSummary,
   ): Promise<void> {
     const filePath = join(coverageDir, `${componentId}.json`);
     return writeFile(filePath, JSON.stringify(componentCoverage));
   }
 
   private async jsonSummaryOfComponent(
-    component: FirecoverYML["components"][number]
+    component: FirecoverYML["components"][number],
   ): Promise<JSONSummary> {
     const searchGlobPatterns = component.paths;
     const lookupFileName = "coverage-summary.json";
     const fullGlobPatterns = searchGlobPatterns.map((pattern) =>
-      join(pattern, lookupFileName)
+      join(pattern, lookupFileName),
     );
 
     const filesRaw: string[][] = await Promise.all(
@@ -104,7 +104,7 @@ export class CoverageFinder {
         const globs = await glob.create(pattern);
         const globSpecificFiles = await globs.glob();
         return globSpecificFiles;
-      })
+      }),
     );
 
     const files = filesRaw.flat();
@@ -116,7 +116,7 @@ export class CoverageFinder {
         const content = (await readFile(file)).toString();
         const jsonData = JSON.parse(content) as JSONSummary;
         return jsonData;
-      })
+      }),
     );
 
     const summaryAggregation: JSONSummary = {
@@ -130,10 +130,10 @@ export class CoverageFinder {
 
     for (const summary of allSummaries)
       for (const file of Object.keys(
-        summary
+        summary,
       ) as unknown as (keyof JSONSummary)[])
         for (const type of Object.keys(
-          summary[file]
+          summary[file],
         ) as unknown as (keyof FullCoverage)[]) {
           summaryAggregation[file][type].covered += summary[file][type].covered;
           summaryAggregation[file][type].skipped += summary[file][type].skipped;

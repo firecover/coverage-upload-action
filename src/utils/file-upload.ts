@@ -4,7 +4,7 @@ import { Config } from "./config";
 import { Logger } from "./logger";
 import { readFile } from "node:fs/promises";
 import fetch from "node-fetch";
- 
+
 @injectable()
 @singleton()
 export class FileUploader {
@@ -13,7 +13,7 @@ export class FileUploader {
   constructor(
     private readonly context: Context,
     private readonly logger: Logger,
-    config: Config
+    config: Config,
   ) {
     this.signedRequestEndpoint = config.getSignedRequestEndpoint();
   }
@@ -60,7 +60,7 @@ export class FileUploader {
       throw error;
     }
 
-    const tokenData = (await signedResponse.json()) as { token: string };
-    return tokenData.token;
+    const responseData = (await signedResponse.json()) as { url: string };
+    return responseData.url;
   }
 }

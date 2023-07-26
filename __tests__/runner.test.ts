@@ -21,7 +21,7 @@ describe("Runner", () => {
       { getComponentList } as unknown as Config,
       { findCoverageOfAllComponentsAndWriteToFile } as CoverageFinder,
       { zipFilesInDirectory } as Zipper,
-      { uploadFile } as FileUploader
+      { uploadFile } as FileUploader,
     );
     await runner.run();
 

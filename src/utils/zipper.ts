@@ -16,7 +16,7 @@ export class Zipper {
         const filePath = join(directoryPath, fileName);
         const fileData = await readFile(filePath);
         zip.addFile(fileName, fileData);
-      })
+      }),
     );
 
     await zip.writeZipPromise(targetFilePath);

@@ -15,29 +15,29 @@ export class Config {
   constructor(private readonly logger: Logger) {}
 
   getSignedRequestEndpoint(): string {
-    this.logger.log(`[config/getSignedRequestEndpoint] => todo`);
-    return "todo";
+    this.logger.log(`[config/getSignedRequestEndpoint]`);
+    return "https://getsingeduploadurl-rjfhfkhqaq-uc.a.run.app";
   }
 
   async getRepoFirecoverYmlSettings(): Promise<FirecoverYML> {
     try {
       const configFileLocation = join(cwd(), "./firecover.yml");
       this.logger.log(
-        `[config/getRepoFirecoverYmlSettings] looking for ${configFileLocation}`
+        `[config/getRepoFirecoverYmlSettings] looking for ${configFileLocation}`,
       );
       const firecoverYml = await readFile(configFileLocation);
       this.logger.log(
-        `[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`
+        `[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`,
       );
       const firecoverConfig = YAML.parse(firecoverYml.toString()) || {};
       this.logger.log(
-        `[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`
+        `[config/getRepoFirecoverYmlSettings] found ${configFileLocation}, yaml parsing...`,
       );
       const mergedConfig = { ...defaultConfig, ...firecoverConfig };
       this.logger.log(
         `[config/getRepoFirecoverYmlSettings] mergedConfig ${JSON.stringify(
-          mergedConfig
-        )}`
+          mergedConfig,
+        )}`,
       );
       return mergedConfig;
     } catch {
@@ -50,8 +50,8 @@ export class Config {
     const components = settings.components;
     this.logger.log(
       `[config/getComponentList] components identified: ${JSON.stringify(
-        components
-      )}`
+        components,
+      )}`,
     );
     return components;
   }

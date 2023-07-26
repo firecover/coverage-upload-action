@@ -15,7 +15,7 @@ export class Runner {
     private readonly config: Config,
     private readonly coverage: CoverageFinder,
     private readonly zipper: Zipper,
-    private readonly uploader: FileUploader
+    private readonly uploader: FileUploader,
   ) {}
   async run(): Promise<void> {
     // Step 1: List all components
@@ -28,7 +28,7 @@ export class Runner {
 
     // Step 3: Zip files
     const zipFilePath = await this.zipper.zipFilesInDirectory(
-      aggregatedCoverageDirectoryPath
+      aggregatedCoverageDirectoryPath,
     );
 
     // Step 4: Upload

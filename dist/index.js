@@ -91,8 +91,8 @@ let Config = exports.Config = class Config {
         this.logger = logger;
     }
     getSignedRequestEndpoint() {
-        this.logger.log(`[config/getSignedRequestEndpoint] => todo`);
-        return "todo";
+        this.logger.log(`[config/getSignedRequestEndpoint]`);
+        return "https://getsingeduploadurl-rjfhfkhqaq-uc.a.run.app";
     }
     async getRepoFirecoverYmlSettings() {
         try {
@@ -406,8 +406,8 @@ let FileUploader = exports.FileUploader = class FileUploader {
             this.logger.log(JSON.stringify(signedResponse));
             throw error;
         }
-        const tokenData = (await signedResponse.json());
-        return tokenData.token;
+        const responseData = (await signedResponse.json());
+        return responseData.url;
     }
 };
 exports.FileUploader = FileUploader = __decorate([
