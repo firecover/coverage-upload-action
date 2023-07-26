@@ -94,7 +94,7 @@ export class CoverageFinder {
     component: FirecoverYML["components"][number],
   ): Promise<JSONSummary> {
     const searchGlobPatterns = component.paths;
-    const lookupFileName = "coverage-summary.json";
+    const lookupFileName = "coverage-final.json";
     const fullGlobPatterns = searchGlobPatterns.map((pattern) =>
       join(pattern, lookupFileName),
     );

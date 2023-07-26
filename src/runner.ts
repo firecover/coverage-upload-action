@@ -20,7 +20,6 @@ export class Runner {
   async run(): Promise<void> {
     // Step 1: List all components
     const components = await this.config.getComponentList();
-    this.logger.log(`Components: \n * ${components.join("\n * ")}`);
 
     // Step 2: Write to file aggregated coverage
     const aggregatedCoverageDirectoryPath =
