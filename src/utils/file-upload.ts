@@ -11,43 +11,29 @@ export class FileUploader {
 
   constructor(
     private readonly context: Context,
-    readonly config: Config,
-    private readonly logger: Logger
+    private readonly logger: Logger,
+    config: Config
   ) {
     this.signedRequestEndpoint = config.getSignedRequestEndpoint();
   }
 
-  async uploadBlob({
-    reporter,
-    component,
-    filePath,
-  }: {
-    component: string;
-    reporter: "json-summary";
-    filePath: string;
-  }): Promise<void> {
-    const signedUploadUrl = await this.getSignedUrlFor({ component, reporter });
-    await this.uploadFileWithSignedUrl({ filePath, signedUploadUrl });
+  async uploadFile(filePathToUpload: string): Promise<void> {
+    const signedUploadUrl = await this.getSignedUrl();
+    await this.uploadFileWithSignedUrl({ filePathToUpload, signedUploadUrl });
   }
 
   private async uploadFileWithSignedUrl({
-    filePath,
+    filePathToUpload,
     signedUploadUrl,
   }: {
-    filePath: string;
+    filePathToUpload: string;
     signedUploadUrl: string;
   }): Promise<void> {
-    const file = await readFile(filePath);
+    const file = await readFile(filePathToUpload);
     await fetch(signedUploadUrl, { body: file, method: "put" });
   }
 
-  private async getSignedUrlFor({
-    component,
-    reporter,
-  }: {
-    component: string;
-    reporter: "json-summary";
-  }): Promise<string> {
+  private async getSignedUrl(): Promise<string> {
     const [ref, token] = await Promise.all([
       this.context.getRef(),
       this.context.getToken(),
@@ -56,8 +42,6 @@ export class FileUploader {
     const body = JSON.stringify({
       token,
       ref,
-      reporter,
-      component,
     });
 
     const signedResponse = await fetch(this.signedRequestEndpoint, {
