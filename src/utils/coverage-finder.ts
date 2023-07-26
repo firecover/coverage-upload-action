@@ -137,9 +137,9 @@ export class CoverageFinder {
         for (const type of Object.keys(
           summary[file],
         ) as unknown as (keyof FullCoverage)[]) {
-          // this.logger.log(
-          //   JSON.stringify({ file, type, summary, summaryAggregation }),
-          // );
+          this.logger.log(
+            JSON.stringify({ file, type, summary, summaryAggregation }),
+          );
           summaryAggregation[file][type].covered += summary[file][type].covered;
           summaryAggregation[file][type].skipped += summary[file][type].skipped;
           summaryAggregation[file][type].total += summary[file][type].total;
