@@ -6,5 +6,5 @@ import * as core from "@actions/core";
 export class Logger {
   log = core.info;
   error = core.error;
-  debug = core.log;
+  debug = core.debug;
 }
