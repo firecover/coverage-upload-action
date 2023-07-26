@@ -359,6 +359,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.FileUploader = void 0;
 const tsyringe_1 = __nccwpck_require__(1069);
@@ -366,6 +369,7 @@ const context_1 = __nccwpck_require__(6570);
 const config_1 = __nccwpck_require__(352);
 const logger_1 = __nccwpck_require__(885);
 const promises_1 = __nccwpck_require__(3977);
+const node_fetch_1 = __importDefault(__nccwpck_require__(467));
 let FileUploader = exports.FileUploader = class FileUploader {
     constructor(context, logger, config) {
         this.context = context;
@@ -378,7 +382,7 @@ let FileUploader = exports.FileUploader = class FileUploader {
     }
     async uploadFileWithSignedUrl({ filePathToUpload, signedUploadUrl, }) {
         const file = await (0, promises_1.readFile)(filePathToUpload);
-        await fetch(signedUploadUrl, { body: file, method: "put" });
+        await (0, node_fetch_1.default)(signedUploadUrl, { body: file, method: "put" });
     }
     async getSignedUrl() {
         const [ref, token] = await Promise.all([
@@ -389,7 +393,7 @@ let FileUploader = exports.FileUploader = class FileUploader {
             token,
             ref,
         });
-        const signedResponse = await fetch(this.signedRequestEndpoint, {
+        const signedResponse = await (0, node_fetch_1.default)(this.signedRequestEndpoint, {
             body,
             method: "post",
             headers: {
