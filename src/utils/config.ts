@@ -1,8 +1,10 @@
 import { injectable, singleton } from "tsyringe";
 import { readFile } from "node:fs/promises";
 import YAML from "yaml";
+import { join } from "node:path";
+import { cwd } from "node:process";
 
-const defaultConfig: FirecoverYML = {
+export const defaultConfig: FirecoverYML = {
   components: [{ componentId: "default", name: "default", paths: ["**"] }],
 };
 
@@ -15,7 +17,7 @@ export class Config {
 
   async getRepoFirecoverYmlSettings(): Promise<FirecoverYML> {
     try {
-      const firecoverYml = await readFile("./firecover.yml");
+      const firecoverYml = await readFile(join(cwd(), "./firecover.yml"));
       const firecoverConfig = YAML.parse(firecoverYml.toString()) || {};
       return { ...defaultConfig, ...firecoverConfig };
     } catch {

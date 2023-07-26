@@ -15,6 +15,7 @@ export class Context {
     if (this.token) {
       return this.token;
     }
+
     this.token = core.getInput("token");
     return this.token;
   }
