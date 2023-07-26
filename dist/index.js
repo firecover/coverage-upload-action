@@ -322,6 +322,7 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
         for (const summary of allSummaries)
             for (const file of Object.keys(summary))
                 for (const type of Object.keys(summary[file])) {
+                    this.logger.log(JSON.stringify({ file, type, summary, summaryAggregation }));
                     summaryAggregation[file][type].covered += summary[file][type].covered;
                     summaryAggregation[file][type].skipped += summary[file][type].skipped;
                     summaryAggregation[file][type].total += summary[file][type].total;
