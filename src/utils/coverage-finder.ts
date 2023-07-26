@@ -109,7 +109,7 @@ export class CoverageFinder {
 
     const files = filesRaw.flat();
 
-    this.logger.debug(`Found files: \n * ${files.join("\n * ")}`);
+    this.logger.log(`Found files: \n * ${files.join("\n * ")}`);
 
     const allSummaries: JSONSummary[] = await Promise.all(
       files.map(async (file) => {

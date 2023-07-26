@@ -56,7 +56,7 @@ export class FileUploader {
     if (signedResponse.status !== 200) {
       const error = new Error("Unable to get token");
       this.logger.error(error);
-      this.logger.debug(JSON.stringify(signedResponse));
+      this.logger.log(JSON.stringify(signedResponse));
       throw error;
     }
 
