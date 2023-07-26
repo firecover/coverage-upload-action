@@ -98,4 +98,4 @@ Thumbs.db
 __tests__/runner/*
 lib/**/*
 
-!coverage/coverage-final.json
+!coverage/coverage-summary.json

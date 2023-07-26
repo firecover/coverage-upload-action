@@ -297,7 +297,7 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
     }
     async jsonSummaryOfComponent(component) {
         const searchGlobPatterns = component.paths;
-        const lookupFileName = "coverage-final.json";
+        const lookupFileName = "coverage-summary.json";
         const fullGlobPatterns = searchGlobPatterns.map((pattern) => (0, path_1.join)(pattern, lookupFileName));
         const filesRaw = await Promise.all(fullGlobPatterns.map(async (pattern) => {
             const globs = await glob.create(pattern);
