@@ -139,10 +139,6 @@ export class CoverageFinder {
         for (const type of Object.keys(
           summary[file],
         ) as unknown as (keyof FullCoverage)[]) {
-          this.logger.log(
-            JSON.stringify({ file, type, summary, summaryAggregation }),
-          );
-
           // covered ----
           const accumulatedCovered: number = lodashGet(
             summaryAggregation,

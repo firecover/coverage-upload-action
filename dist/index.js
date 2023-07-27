@@ -329,7 +329,6 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
         for (const summary of allSummaries)
             for (const file of Object.keys(summary))
                 for (const type of Object.keys(summary[file])) {
-                    this.logger.log(JSON.stringify({ file, type, summary, summaryAggregation }));
                     // covered ----
                     const accumulatedCovered = (0, lodash_get_1.default)(summaryAggregation, [file, type, "covered"], 0);
                     (0, lodash_set_1.default)(summaryAggregation, [file, type, "covered"], accumulatedCovered + summary[file][type].covered);
