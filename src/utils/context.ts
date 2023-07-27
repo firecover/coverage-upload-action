@@ -16,7 +16,7 @@ export class Context {
       return this.token;
     }
 
-    this.token = core.getInput("token");
+    this.token = core.getInput("appToken");
     return this.token;
   }
 

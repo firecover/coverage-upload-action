@@ -2,7 +2,7 @@ name: Firecover coverage uploader
 description: Github action to upload coverage to Firecover
 author: Vajahath Ahmed
 inputs:
-  token:
+  appToken:
     required: false
     description: 'Repository upload token - get it from Firecover'
 runs:

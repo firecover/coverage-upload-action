@@ -173,7 +173,7 @@ let Context = exports.Context = class Context {
         if (this.token) {
             return this.token;
         }
-        this.token = core.getInput("token");
+        this.token = core.getInput("appToken");
         return this.token;
     }
     async getRef() {
