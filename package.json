@@ -32,7 +32,7 @@
     "adm-zip": "^0.5.10",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
-    "nanoid": "^3.3.6",
+    "nanoid": "^4.0.2",
     "node-fetch": "^2.6.12",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.8.0",
