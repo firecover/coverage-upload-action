@@ -16,6 +16,7 @@ import { Logger } from "./logger";
 import { Context } from "./context";
 import lodashSet from "lodash.set";
 import lodashGet from "lodash.get";
+import { cwd } from "node:process";
 
 export const coverageObjectKeys: (keyof CoverageObject)[] = [
   "covered",
@@ -33,11 +34,15 @@ export const fullCoverageObjectKeys: (keyof FullCoverage)[] = [
 @injectable()
 @singleton()
 export class CoverageFinder {
+  private cwd: string;
+
   constructor(
     private readonly config: Config,
     private readonly logger: Logger,
     private readonly context: Context,
-  ) {}
+  ) {
+    this.cwd = cwd();
+  }
 
   async findCoverageOfAllComponentsAndWriteToFile(
     components: FirecoverYML["components"],
@@ -77,7 +82,7 @@ export class CoverageFinder {
       }
     }
 
-    await this.writeOut(coverageDir, "aggregated-coverage-summary", {
+    await this.writeOut(coverageDir, "_aggregated-coverage-summary", {
       total: projectFullCoverage,
     });
 
@@ -187,6 +192,15 @@ export class CoverageFinder {
           );
         }
 
-    return summaryAggregation;
+    return this.stripFileNameWithCwd(summaryAggregation);
+  }
+
+  private stripFileNameWithCwd(summary: JSONSummary): JSONSummary {
+    return Object.fromEntries(
+      Object.entries(summary).map(([key, value]) => [
+        key.replace(this.cwd, ""),
+        value,
+      ]),
+    ) as JSONSummary;
   }
 }

@@ -249,6 +249,7 @@ const logger_1 = __nccwpck_require__(885);
 const context_1 = __nccwpck_require__(6570);
 const lodash_set_1 = __importDefault(__nccwpck_require__(1552));
 const lodash_get_1 = __importDefault(__nccwpck_require__(9197));
+const node_process_1 = __nccwpck_require__(7742);
 exports.coverageObjectKeys = [
     "covered",
     "pct",
@@ -266,6 +267,7 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
         this.config = config;
         this.logger = logger;
         this.context = context;
+        this.cwd = (0, node_process_1.cwd)();
     }
     async findCoverageOfAllComponentsAndWriteToFile(components) {
         const coverageDir = await this.context.getTmpDirectory();
@@ -292,7 +294,7 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
                         100;
             }
         }
-        await this.writeOut(coverageDir, "aggregated-coverage-summary", {
+        await this.writeOut(coverageDir, "_aggregated-coverage-summary", {
             total: projectFullCoverage,
         });
         return coverageDir;
@@ -343,7 +345,13 @@ let CoverageFinder = exports.CoverageFinder = class CoverageFinder {
                         summaryAggregation[file][type].total) *
                         100);
                 }
-        return summaryAggregation;
+        return this.stripFileNameWithCwd(summaryAggregation);
+    }
+    stripFileNameWithCwd(summary) {
+        return Object.fromEntries(Object.entries(summary).map(([key, value]) => [
+            key.replace(this.cwd, ""),
+            value,
+        ]));
     }
 };
 exports.CoverageFinder = CoverageFinder = __decorate([
