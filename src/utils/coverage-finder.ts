@@ -14,6 +14,8 @@ import {
 import { readFile, writeFile } from "fs/promises";
 import { Logger } from "./logger";
 import { Context } from "./context";
+import lodashSet from "lodash.set";
+import lodashGet from "lodash.get";
 
 export const coverageObjectKeys: (keyof CoverageObject)[] = [
   "covered",
@@ -140,13 +142,53 @@ export class CoverageFinder {
           this.logger.log(
             JSON.stringify({ file, type, summary, summaryAggregation }),
           );
-          summaryAggregation[file][type].covered += summary[file][type].covered;
-          summaryAggregation[file][type].skipped += summary[file][type].skipped;
-          summaryAggregation[file][type].total += summary[file][type].total;
-          summaryAggregation[file][type].pct =
+
+          // covered ----
+          const accumulatedCovered: number = lodashGet(
+            summaryAggregation,
+            [file, type, "covered"],
+            0,
+          );
+
+          lodashSet(
+            summaryAggregation,
+            [file, type, "covered" as const],
+            accumulatedCovered + summary[file][type].covered,
+          );
+
+          // skipped ----
+          const accumulatedSkipped: number = lodashGet(
+            summaryAggregation,
+            [file, type, "skipped" as const],
+            0,
+          );
+
+          lodashSet(
+            summaryAggregation,
+            [file, type, "skipped" as const],
+            accumulatedSkipped + summary[file][type].skipped,
+          );
+
+          // total ----
+          const accumulatedTotal: number = lodashGet(
+            summaryAggregation,
+            [file, type, "total"],
+            0,
+          );
+          lodashSet(
+            summaryAggregation,
+            [file, type, "total"],
+            accumulatedTotal + summary[file][type].total,
+          );
+
+          // pct ----
+          lodashSet(
+            summaryAggregation,
+            [file, type, "pct"],
             (summaryAggregation[file][type].covered /
               summaryAggregation[file][type].total) *
-            100;
+              100,
+          );
         }
 
     return summaryAggregation;
